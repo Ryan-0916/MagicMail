@@ -15,6 +15,7 @@ public final class MagicMailConstant {
     public static final String YML_LANGUAGE = "language";
     public static final String YML_MONGODB = "mongodb";
     public static final String YML_MAILBOX_MENU = "menu/mailboxMenu";
+    public static final String YML_MAIL_ATTACHMENT_MENU = "menu/mailAttachmentMenu";
 
     /** Redis 相关 key */
     /* 跨服通讯频道 */

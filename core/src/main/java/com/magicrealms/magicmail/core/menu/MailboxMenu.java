@@ -1,6 +1,6 @@
 package com.magicrealms.magicmail.core.menu;
-import com.magicrealms.magiclib.bukkit.manage.ConfigManager;
 import com.magicrealms.magiclib.common.enums.ParseType;
+import com.magicrealms.magiclib.common.utils.FormatUtil;
 import com.magicrealms.magiclib.common.utils.StringUtil;
 import com.magicrealms.magiclib.core.MagicLib;
 import com.magicrealms.magiclib.core.holder.PageMenuHolder;
@@ -13,10 +13,14 @@ import com.magicrealms.magicmail.core.menu.listener.DataChangeListener;
 import com.magicrealms.magicmail.core.menu.strategy.CategoryStrategy;
 import com.magicrealms.magicmail.core.menu.strategy.DefaultStrategy;
 import com.magicrealms.magicmail.core.menu.strategy.PullStrategy;
+import com.magicrealms.magicmail.core.utils.LineBreakFormatter;
+import com.magicrealms.magicplayer.api.MagicPlayerAPI;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,8 +33,9 @@ import static com.magicrealms.magicmail.common.MagicMailConstant.YML_MAILBOX_MEN
  * @Desc 收件箱菜单
  * @date 2025-05-26
  */
-@SuppressWarnings("unused")
 public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
+    /* Menu 按钮相关属性 Key */
+    String ICON_DISPLAY = "Icons.%s.Display";
     /* 邮件数量字体占位符 */
     private final String MAIL_COUNT_FONT_FORMAT;
     /* 邮件数量变量 */
@@ -41,8 +46,6 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
     private final List<Mail> MAILS;
     /* 每页显示邮件数量 */
     private final int PAGE_COUNT;
-    /* Menu 按钮相关属性 Key */
-    private final String ICON_DISPLAY = "Icons.%s.Display";
     /* 显示的邮件 */
     private List<Mail> data;
     /* 分类 */
@@ -51,6 +54,8 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
     private MailBoxSort sort = MailBoxSort.NEWEST;
     /* 分类动画策略 */
     private final CategoryStrategy categoryState;
+    /* 邮箱图标缓存 */
+    private final Map<String, ItemStack> mailIconCache = new HashMap<>();
 
     public MailboxMenu(Player player) {
         super(BukkitMagicMail.getInstance(), player, YML_MAILBOX_MENU, "A####BCDEF#IJJJJJKG#IJJJJJLH#IJJJJJ###IJJJJJM##IJJJJJN");
@@ -122,8 +127,7 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
             switch (c) {
                 case 'A' -> setCheckBoxSlot(i, getBackMenuRunnable() != null);
                 case 'D' -> setItemSlot(i, sort.getItemSlot(c));
-                case 'F', 'G', 'H' ->
-                    setButtonSlot(i, category.getKey() == c);
+                case 'F', 'G', 'H' -> setButtonSlot(i, category.getKey() == c);
                 case 'I', 'J' -> {
                     int index = (c == 'I') ? ++appearIndex : appearIndex;
                     if (data.size() > index) {
@@ -134,6 +138,8 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
                 }
                 case 'K', 'L' -> setButtonSlot(i, !(getPage() > 1));
                 case 'M', 'N' -> setButtonSlot(i, !(getPage() < getMaxPage()));
+                case 'E' -> setItemSlot(i, ItemUtil.getItemStackByConfig(getPlugin().getConfigManager(), getConfigPath(),
+                        String.format(ICON_DISPLAY, "c"), Map.of("count", String.valueOf(data.size()))));
                 default -> setItemSlot(i);
             }
         }
@@ -195,8 +201,16 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
      * @param slot 槽位
      * @param key 当前槽位对应的 Key
      */
-    private void clickMail(int slot, char key) {
-        /* TODO: 完善此方法 */
+    private void clickMail(int slot, Character key) {
+        int index = StringUtils
+                .countMatches(getLayout().substring(0, slot), "I");
+        if (key.equals('J')) {
+            index--;
+        }
+        if (index < 0) return;
+        int selectedIndex = (getPage() - 1) * PAGE_COUNT + index;
+        new MailAttachmentMenu(MailboxParam.of(getPlayer(), data.get(selectedIndex), createPlaceholders(selectedIndex),
+                this::asyncOpenMenu));
     }
 
     /**
@@ -206,12 +220,38 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
      * @param mail 邮件信息
      */
     private void setMail(int slot, char key, Mail mail) {
-        /* TODO: 完善此方法 */
+        String mailId = mail.getId();
+        if (mailIconCache.containsKey(mailId)) {
+            setItemSlot(slot, mailIconCache.get(mailId));
+            return;
+        }
+        Map<String, String> map = new HashMap<>(Map.of(
+                "subject", mail.getSubject(),
+                "amount", String.valueOf(mail.getAttachment().getAmount()),
+                "point", String.valueOf(mail.getAttachment().getPoint()),
+                "receiver_name", mail.getReceiverName(),
+                "receiver_avatar", MagicPlayerAPI.getInstance().getPlayerAvatar(mail.getReceiverName()),
+                "sender_name", mail.getSenderName(),
+                "sender_avatar", MagicPlayerAPI.getInstance().getPlayerAvatar(mail.getSenderName()),
+                "content", Optional.ofNullable(mail.getContent())
+                        .map(content -> String.join("<newline>",
+                                LineBreakFormatter.formatWithLineBreaks("<reset><white>" + content, 18)))
+                        .orElse("")
+        ));
+        map.putAll(FormatUtil.formatDateTime(mail.getSendTime(), "send_time_"));
+        ItemStack icon = ItemUtil.getItemStackByConfig(
+                getPlugin().getConfigManager(),
+                getConfigPath(),
+                String.format(ICON_DISPLAY, key),
+                map
+        );
+        mailIconCache.put(mailId, icon);
+        setItemSlot(slot, icon);
     }
 
     @Override
     protected LinkedHashMap<String, String> processHandTitle(LinkedHashMap<String, String> title) {
-        Map<String, String> map = createPlaceholders();
+        Map<String, String> map = createPlaceholders(null);
         return title
                 .entrySet()
                 .stream()
@@ -219,23 +259,15 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
                         -> StringUtil.replacePlaceholders(entry.getValue(), map), (oldVal, newVal) -> oldVal, LinkedHashMap::new));
     }
 
-    @SuppressWarnings("DuplicatedCode")
-    protected Map<String, String> createPlaceholders() {
+    protected Map<String, String> createPlaceholders(@Nullable Integer selectedIndex) {
         Map<String, String> map = new HashMap<>();
         /* 变量部分处理 */
         final String SUBJECT = "mail_subject_%s",  // 邮件主题
                 HAS = "has_mail_%s", // 存在邮件
+                SELECTED = "selected_mail_%s",
                 SUBJECT_FORMAT = "subject_format_%s"; // 邮件主题格式化
-        /* 自定义 Papi Path */
-        final String CUSTOM_PAPI_HAS = "CustomPapi.HasMail_%s.%s", // 存在邮件,
-                CUSTOM_PAPI_SUBJECT_FORMAT = "CustomPapi.SubjectFormat_%s.%s", // 邮件主题格式化
-                CUSTOM_PAPI_CATEGORY = "CustomPapi.Category_%s.%s"; // 分类部分
         /* 起始坐标 */
         int pageOffset = (getPage() - 1) * PAGE_COUNT;
-        /* 文件管理器 */
-        ConfigManager configManager = getPlugin().getConfigManager();
-        /* 文件地址 */
-        String configPath = getConfigPath();
         for (int i = 0; i < PAGE_COUNT; i++) {
             int index = i + pageOffset, // 邮件的下标
                     mailSort = i + 1; // 邮件的顺序;
@@ -244,15 +276,15 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
             /* 变量部分处理 */
             String papiSubject = String.format(SUBJECT, mailSort),
                     papiHas = String.format(HAS, mailSort),
+                    papiSelected = String.format(SELECTED, mailSort),
                     papiSubjectFormat = String.format(SUBJECT_FORMAT, mailSort);
-            /* 启用变量 */
-            String enablePath = hasMail ? "Enable" : "UnEnable";
             /* 是否存在变量 */
-            map.put(papiHas, configManager.getYmlValue(configPath,
-                    String.format(CUSTOM_PAPI_HAS, mailSort, enablePath)));
+            map.put(papiHas, getCustomPapiText("HasMail_" + mailSort, hasMail));
+            /* 是否选中变量 */
+            map.put(papiSelected, getCustomPapiText("SelectedMail_" + mailSort, selectedIndex != null && selectedIndex == index));
             /* 主题格式化变量 */
-            map.put(papiSubjectFormat, configManager.getYmlValue(configPath,
-                    String.format(CUSTOM_PAPI_SUBJECT_FORMAT, mailSort, enablePath)));
+            map.put(papiSubjectFormat, getCustomPapiText("SubjectFormat_"
+                    + mailSort, hasMail));
             /* 主题部分变量 */
             map.put(papiSubject, hasMail ? data.get(index).getSubject() : StringUtils.EMPTY);
         }
@@ -262,16 +294,20 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
         map.put("mail_count_bubble", countBubblePapi);
         /* 全部分类 */
         map.put("category_all", MagicLib.getInstance().getOffsetManager().format(categoryState
-                .getOffset().left(), StringUtils.EMPTY)
-                + configManager.getYmlValue(configPath, String.format(CUSTOM_PAPI_CATEGORY, "All", category == MailboxCategory.ALL ? "Enable" : "UnEnable")));
+                .getOffset().left(), StringUtils.EMPTY) +
+                getCustomPapiText("CategoryAll", category == MailboxCategory.ALL));
         /* 未读分类 */
         map.put("category_unread", MagicLib.getInstance().getOffsetManager().format(categoryState
-                .getOffset().mid(), StringUtils.EMPTY)
-                + configManager.getYmlValue(configPath, String.format(CUSTOM_PAPI_CATEGORY, "Unread", category == MailboxCategory.UNREAD ? "Enable" : "UnEnable")));
+                .getOffset().mid(), StringUtils.EMPTY) +
+                getCustomPapiText("CategoryUnread", category == MailboxCategory.UNREAD));
         /* 全部分类 */
         map.put("category_read", MagicLib.getInstance().getOffsetManager().format(categoryState
-                .getOffset().right(), StringUtils.EMPTY)
-                + configManager.getYmlValue(configPath, String.format(CUSTOM_PAPI_CATEGORY, "Read", category == MailboxCategory.READ ? "Enable" : "UnEnable")));
+                .getOffset().right(), StringUtils.EMPTY) +
+                getCustomPapiText("CategoryRead", category == MailboxCategory.READ));
+        /* 排序 - 最新 */
+        map.put("sort_newest", getCustomPapiText("SortNewest", sort == MailBoxSort.NEWEST));
+        /* 排序 - 旧的 */
+        map.put("sort_oldest", getCustomPapiText("SortOldest", sort == MailBoxSort.OLDEST));
         return map;
     }
 

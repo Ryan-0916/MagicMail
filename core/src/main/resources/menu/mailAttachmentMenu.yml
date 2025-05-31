@@ -1,0 +1,118 @@
+Title:
+  Background:
+    Text: '邮件-附件'
+    Offset: 0
+  HasMail_N:
+    Text: '%has_mail_N%'
+    Offset: 0
+  SelectedMail_N:
+    Text: '%selected_mail_N%'
+    Offset: 0
+  CategoryAll:
+    Text: '%category_all%'
+  CategoryUnread:
+    Text: '%category_unread%'
+  CategoryRead:
+    Text: '%category_read%'
+  SortNewest:
+    Text: '%sort_newest%'
+  SortOldest:
+    Text: '%sort_oldest%'
+  BackMenu:
+    Text: '%back_menu%'
+  MailCount:
+    Text: '%mail_count%'
+  MailCountBubble:
+    Text: '%mail_count_bubble%'
+  Page:
+    Text: '%page%'
+    Offset: 0
+    Left: true
+  Mid:
+    Text: '/'
+    Offset: 0
+  MaxPage:
+    Text: '%max_page%'
+    Offset: 0
+    Right: true
+  MailSubject_N:
+    Text: '%subject_format_N%%mail_subject_N%'
+    Offset: 0
+
+CustomPapi:
+  BackMenu:
+    Enable: '取消'
+    UnEnable: '关闭'
+  PrePage:
+    Enable: '可以上一页'
+    UnEnable: '不可以上一页'
+  NextPage:
+    Enable: '可以下一页'
+    UnEnable: '不可以下一页'
+
+# # 默认材质
+# A 返回 / 关闭
+# B 领取邮箱
+# C 附件物品
+# D 上一页
+# E 下一页
+Layout:
+  - '#A#####B#'
+  - '#CCCCCCC#'
+  - '#CCCCCCC#'
+  - '#CCCCCCC#'
+  - '#D#####E#'
+
+Icons:
+  A:
+    OpenDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L返回'
+      Lore:
+        - '&6&L返回'
+    CloseDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L关闭'
+      Lore:
+        - '&6&L关闭'
+  B:
+    ActiveDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L一件领取'
+      Lore:
+        - '&6&L一件领取'
+    DisabledDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L部分领取'
+      Lore:
+        - '&6&L部分领取'
+  D:
+    ActiveDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L上一页'
+      Lore:
+        - '&6&L上一页'
+    DisabledDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L上一页'
+      Lore:
+        - '&6&L上一页'
+  E:
+    ActiveDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L下一页'
+      Lore:
+        - '&6&L下一页'
+    DisabledDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L下一页'
+      Lore:
+        - '&6&L下一页'

@@ -70,6 +70,9 @@ public class Mail {
         return builder(null, receiver);
     }
 
+    public String getSenderName() {
+        return senderName != null ? senderName : "System";
+    }
 
 
 }

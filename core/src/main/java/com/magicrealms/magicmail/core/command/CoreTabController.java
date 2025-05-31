@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 public class CoreTabController {
 
     private static final Supplier<Stream<String>> fileNames
-            = () -> Stream.of("all", "config", "language", "redis");
+            = () -> Stream.of("all", "config", "language", "redis", "mailBoxMenu", "mailAttachmentMenu");
 
     @TabComplete(text = "^\\s?$", permissionType = PermissionType.CONSOLE_OR_PERMISSION,
             permission = "magic.command.magicmail.all||magic.command.magicmail.reload", label = "^magicMail$")

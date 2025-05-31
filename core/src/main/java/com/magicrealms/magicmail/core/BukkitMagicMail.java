@@ -101,7 +101,8 @@ public class BukkitMagicMail extends MagicMail {
 
     @Override
     protected void loadConfig(ConfigManager configManager) {
-        configManager.loadConfig(YML_CONFIG, YML_LANGUAGE, YML_MONGODB, YML_REDIS, YML_MAILBOX_MENU);
+        configManager.loadConfig(YML_CONFIG, YML_LANGUAGE, YML_MONGODB, YML_REDIS,
+                YML_MAILBOX_MENU, YML_MAIL_ATTACHMENT_MENU);
     }
 
     @Override
