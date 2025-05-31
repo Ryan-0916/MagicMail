@@ -1,0 +1,13 @@
+name: MagicMail
+version: ${projectVersion}
+main: com.magicrealms.magicmail.core.BukkitMagicMail
+api-version: 1.21
+author: Ryan0916
+commands:
+  MagicMail:
+    description: '魔法领域-邮箱'
+    aliases:
+      - mail
+depend:
+  - MagicLib
+  - MagicPlayer

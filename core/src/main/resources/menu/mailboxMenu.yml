@@ -1,0 +1,249 @@
+Title:
+  Background:
+    Text: '收件箱'
+    Offset: 0
+  HasMail_N:
+    Text: '%has_mail_N%'
+    Offset: 0
+  SelectedMail_N:
+    Text: '%selected_mail_N%'
+    Offset: 0
+  MailSubject_N:
+    Text: '%subject_format_N%%mail_subject_N%'
+    Offset: 0
+  MailCount:
+    Text: '%mail_count%'
+  MailCountBubble:
+    Text: '%mail_count_bubble%'
+  CategoryAll:
+    Text: '%category_all%'
+  CategoryUnread:
+    Text: '%category_unread%'
+  CategoryRead:
+    Text: '%category_read%'
+
+Setting:
+  # Mail Count 部分设置
+  Count:
+    # 字体
+    Font: '<font: minecraft:default>'
+    # 气泡
+    Bubble:
+      Left: ''
+      Middle: ''
+      Right: ''
+  # 动态选择框部分设定
+  Category:
+    Tick: 0
+    Offset:
+      UnEnable: 0
+      Enable: 0
+
+# N 为你每页的个数 1 - N 例如你每页有 4个邮箱配置(J)
+# 那么请你为 CustomPapi 设置 HasMail_1 - HasMail_4
+# SubjectFormat_N 同理
+# SelectedMail_N 同理
+CustomPapi:
+  PrePage:
+    Enable: '可以上一页'
+    UnEnable: '不可以上一页'
+  NextPage:
+    Enable: '可以下一页'
+    UnEnable: '不可以下一页'
+  HasMail_N:
+    Enable: '存在第 N 个邮箱'
+    UnEnable: '不存在第 N 个邮箱'
+  SelectedMail_N:
+    Enable: '选中第 N 个邮箱'
+    UnEnable: '未选中第 N 个邮箱'
+  SubjectFormat_N:
+    Enable: '<font: minecraft:default>'
+    UnEnable: ''
+  Category_All:
+    Enable: '全部'
+    UnEnable: '点击切换至全部'
+  Category_Unread:
+    Enable: '未读'
+    UnEnable: '点击切换至未读'
+  Category_Read:
+    Enable: '已读'
+    UnEnable: '点击切换至已读'
+
+# # 默认材质
+# A 返回 / 关闭
+# B 移除所有已读邮件
+# C 读取所有未读邮件 - （无附件）
+# D 排序
+# E 数量
+# F 分类 - 全部
+# G 分类 - 已读
+# H 分类 - 未读
+# I 邮件
+# J 邮件预留
+# K 上一页
+# L 上一页预留
+# M 下一页
+# N 下一页预留
+Layout:
+  - 'A####BCDE'
+  - 'F#IJJJJJK'
+  - 'G#IJJJJJL'
+  - 'H#IJJJJJ#'
+  - '##IJJJJJM'
+  - '##IJJJJJN'
+
+Icons:
+  A:
+    OpenDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L返回'
+      Lore:
+        - '&6&L返回'
+    CloseDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L关闭'
+      Lore:
+        - '&6&L关闭'
+  B:
+    Display:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L删除已读邮箱'
+      Lore:
+        - '&6&L删除已读邮箱'
+  C:
+    Display:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L读取未读邮箱'
+      Lore:
+        - '&6&L读取未读邮箱'
+  D:
+    NewestDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L收件时间 - 新'
+      Lore:
+        - '&6&L收件时间 - 新'
+        - '&6&L收件时间 - 旧'
+    OldestDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L收件时间 - 旧'
+      Lore:
+        - '&6&L收件时间 - 新'
+        - '&6&L收件时间 - 旧'
+  E:
+    Display:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L%mail_count%'
+      Lore:
+        - '&6&L%mail_count%'
+  F:
+    ActiveDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L点击切换至全部邮箱'
+      Lore:
+        - '&6&L点击切换至全部邮箱'
+    DisabledDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L全部邮箱'
+      Lore:
+        - '&6&L全部邮箱'
+  G:
+    ActiveDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L点击切换至未读邮箱'
+      Lore:
+        - '&6&L点击切换至未读邮箱'
+    DisabledDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L未读邮箱'
+      Lore:
+        - '&6&L未读邮箱'
+  H:
+    ActiveDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L点击切换至已读邮箱'
+      Lore:
+        - '&6&L点击切换至已读邮箱'
+    DisabledDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L已读邮箱'
+      Lore:
+        - '&6&L已读邮箱'
+  I:
+    Display:
+      ModelData: 0
+      Name: '&E&L%mail_subject%'
+      Lore:
+        - '&6&L%mail_content%'
+  J:
+    Display:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L%mail_subject%'
+      Lore:
+        - '&6&L%mail_content%'
+  K:
+    ActiveDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L上一页'
+      Lore:
+        - '&6&L上一页'
+    DisabledDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L上一页'
+      Lore:
+        - '&6&L上一页'
+  L:
+    ActiveDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L上一页'
+      Lore:
+        - '&6&L上一页'
+    DisabledDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L上一页'
+      Lore:
+        - '&6&L上一页'
+  M:
+    ActiveDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L下一页'
+      Lore:
+        - '&6&L下一页'
+    DisabledDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L下一页'
+      Lore:
+        - '&6&L下一页'
+  N:
+    ActiveDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L下一页'
+      Lore:
+        - '&6&L下一页'
+    DisabledDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L下一页'
+      Lore:
+        - '&6&L下一页'
+
