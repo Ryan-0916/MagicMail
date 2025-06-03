@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
  * @Desc 默认策略
  * @date 2025-05-30
  */
-public class DefaultStrategy extends CategoryStrategy {
+public class DefaultStrategy extends AbstractCategoryStrategy {
 
     public DefaultStrategy(MailboxMenu holder) {
         super(holder);

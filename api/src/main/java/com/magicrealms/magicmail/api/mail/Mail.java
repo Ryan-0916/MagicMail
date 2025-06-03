@@ -17,7 +17,7 @@ import java.util.UUID;
  * @Desc 邮件
  * @date 2025-05-17
  */
-@Getter
+@Data
 @Builder(builderClassName = "MailBuilder", toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,7 +43,7 @@ public class Mail {
     /* 发送时间 */
     @MongoField
     private long sendTime;
-    /* 有效期 */
+    /* 有效期 ms， 0代表永久有效，如若3天内有效则填写 3 * 24 * 60 * 60 * 1000 */
     @MongoField
     private long expire;
     /* 状态 */
@@ -72,6 +72,11 @@ public class Mail {
 
     public String getSenderName() {
         return senderName != null ? senderName : "System";
+    }
+
+    /* 是否有效 */
+    public boolean isValid() {
+        return expire == 0 || System.currentTimeMillis() <= (sendTime + expire);
     }
 
 

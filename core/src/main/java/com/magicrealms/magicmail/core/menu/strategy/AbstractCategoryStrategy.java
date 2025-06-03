@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
  * 采用策略模式
  * @date 2025-05-30
  */
-public abstract class CategoryStrategy {
+public abstract class AbstractCategoryStrategy {
 
     protected final int ENABLE_OFFSET;
 
@@ -21,7 +21,7 @@ public abstract class CategoryStrategy {
 
     protected final MailboxMenu HOLDER;
 
-    public CategoryStrategy(MailboxMenu holder) {
+    public AbstractCategoryStrategy(MailboxMenu holder) {
         this.ENABLE_OFFSET = holder.getPlugin().getConfigManager().getYmlValue(holder.getConfigPath(), "Setting.Category.Offset.Enable", 0, ParseType.INTEGER);
         this.UN_ENABLE_OFFSET = holder.getPlugin().getConfigManager().getYmlValue(holder.getConfigPath(), "Setting.Category.Offset.UnEnable", 0, ParseType.INTEGER);
         this.HOLDER = holder;

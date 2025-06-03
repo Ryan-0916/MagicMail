@@ -6,11 +6,12 @@ import com.magicrealms.magiclib.core.MagicLib;
 import com.magicrealms.magiclib.core.holder.PageMenuHolder;
 import com.magicrealms.magiclib.core.utils.ItemUtil;
 import com.magicrealms.magicmail.api.mail.Mail;
+import com.magicrealms.magicmail.api.mail.MailStatus;
 import com.magicrealms.magicmail.core.BukkitMagicMail;
 import com.magicrealms.magicmail.core.menu.enums.MailBoxSort;
 import com.magicrealms.magicmail.core.menu.enums.MailboxCategory;
 import com.magicrealms.magicmail.core.menu.listener.DataChangeListener;
-import com.magicrealms.magicmail.core.menu.strategy.CategoryStrategy;
+import com.magicrealms.magicmail.core.menu.strategy.AbstractCategoryStrategy;
 import com.magicrealms.magicmail.core.menu.strategy.DefaultStrategy;
 import com.magicrealms.magicmail.core.menu.strategy.PullStrategy;
 import com.magicrealms.magicmail.core.utils.LineBreakFormatter;
@@ -53,7 +54,7 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
     /* 排序 */
     private MailBoxSort sort = MailBoxSort.NEWEST;
     /* 分类动画策略 */
-    private final CategoryStrategy categoryState;
+    private final AbstractCategoryStrategy categoryState;
     /* 邮箱图标缓存 */
     private final Map<String, ItemStack> mailIconCache = new HashMap<>();
 
@@ -74,7 +75,7 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
     /**
      * 异步更新 Title， 由于 Title 可能出现动态效果
      * 考虑性能方面更新 Title 功能已被策略器代理
-     * {@link CategoryStrategy#asyncUpdateTitle()}
+     * {@link AbstractCategoryStrategy#asyncUpdateTitle()}
      */
     @Override
     protected void asyncUpdateTitle() {
@@ -209,7 +210,10 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
         }
         if (index < 0) return;
         int selectedIndex = (getPage() - 1) * PAGE_COUNT + index;
-        new MailAttachmentMenu(MailboxParam.of(getPlayer(), data.get(selectedIndex), createPlaceholders(selectedIndex),
+        Mail mail = data.get(selectedIndex);
+        if (!mail.isValid() || mail.getStatus() != MailStatus.UNREAD) {
+            return; }
+        new MailAttachmentMenu(MailboxParam.of(getPlayer(), mail, createPlaceholders(selectedIndex),
                 this::asyncOpenMenu));
     }
 
@@ -263,7 +267,7 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
         Map<String, String> map = new HashMap<>();
         /* 变量部分处理 */
         final String SUBJECT = "mail_subject_%s",  // 邮件主题
-                HAS = "has_mail_%s", // 存在邮件
+                HAS = "has_mail_%s", // 存在 Mail
                 SELECTED = "selected_mail_%s",
                 SUBJECT_FORMAT = "subject_format_%s"; // 邮件主题格式化
         /* 起始坐标 */
@@ -279,7 +283,9 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
                     papiSelected = String.format(SELECTED, mailSort),
                     papiSubjectFormat = String.format(SUBJECT_FORMAT, mailSort);
             /* 是否存在变量 */
-            map.put(papiHas, getCustomPapiText("HasMail_" + mailSort, hasMail));
+            map.put(papiHas, hasMail ? getConfigValue(String.format("CustomPapi.%s.%s",
+                    "HasMail_" + mailSort, data.get(index).getStatus()
+                            == MailStatus.READ ? "Read" : "Unread"), "", ParseType.STRING) : StringUtils.EMPTY);
             /* 是否选中变量 */
             map.put(papiSelected, getCustomPapiText("SelectedMail_" + mailSort, selectedIndex != null && selectedIndex == index));
             /* 主题格式化变量 */

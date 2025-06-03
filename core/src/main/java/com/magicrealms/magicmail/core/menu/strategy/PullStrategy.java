@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
  * @Desc 抽拉策略
  * @date 2025-05-30
  */
-public class PullStrategy extends CategoryStrategy {
+public class PullStrategy extends AbstractCategoryStrategy {
 
     /* 动画时长 */
     private final int ANIMATION_TICK;

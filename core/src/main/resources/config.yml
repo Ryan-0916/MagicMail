@@ -1,2 +1,10 @@
+# 邮箱公共模板
+MailTemplate:
+  OfflineItemReturn:
+    Subject: '异常离线物品返还'
+    Content: '系统检测到您异常离线，无法将物品直接返还至您的背包，已通过邮件返还你的物品。'
+  FullInventoryItemReturn:
+    Subject: '背包已满-物品返还'
+    Content: '系统检测到您的背包已满，无法将物品直接返还至您的背包，已通过邮件返还你的物品。'
 Cache:
   Mail: 3600

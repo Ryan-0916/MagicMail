@@ -92,6 +92,8 @@ PlayerMessage:
     UnknownCommand: "未知的指令"
     ReloadFile: "重载文件异常"
     ButtonCooldown: "按钮正在冷却中"
+    NotFountUnreadMail: "未找到该未读邮件，可能原因：邮件已过期或已被读取"
+    ReceiveException: "邮件领取异常，请重新尝试"
   Success:
     ReloadFile: "重载文件成功"
 ConsoleMessage:

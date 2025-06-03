@@ -22,6 +22,10 @@ public final class MagicMailConstant {
     public static final String BUNGEE_CHANNEL = "BUNGEE_CHANNEL_MAGIC_MAIL";
     /* 玩家的邮箱 */
     public static final String MAGIC_MAIL_RECEIVED_MAILS = "MAGIC_MAIL_RECEIVED_MAILS_%s";
+    /* 领取邮箱 Lock */
+    public static final String MAGIC_MAIL_RECEIVE_LOCK = "MAGIC_MAIL_RECEIVE_LOCK_%s";
+
+
 
     /** MongoDB部分常量 */
     /* MongoDB 玩家信息表 */
