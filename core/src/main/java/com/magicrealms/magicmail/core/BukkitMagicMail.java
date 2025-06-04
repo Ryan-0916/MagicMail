@@ -10,6 +10,7 @@ import com.magicrealms.magiclib.common.store.RedisStore;
 import com.magicrealms.magiclib.core.dispatcher.MessageDispatcher;
 import com.magicrealms.magiclib.core.utils.ItemUtil;
 import com.magicrealms.magicmail.api.MagicMail;
+import com.magicrealms.magicmail.api.MagicMailAPI;
 import com.magicrealms.magicmail.api.mail.repository.MailRepository;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -51,7 +52,13 @@ public class BukkitMagicMail extends MagicMail {
             setupMongoDB();
             /* 初始化邮件持久层 */
             setupMailRepository();
+            /* 初始化 API */
+            setupAPI();
         });
+    }
+
+    private void setupAPI() {
+        this.api = new MagicMailAPI(this);
     }
 
     @Override

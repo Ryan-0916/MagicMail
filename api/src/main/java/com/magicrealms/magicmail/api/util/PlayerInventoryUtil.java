@@ -59,12 +59,13 @@ public final class PlayerInventoryUtil {
         /* 玩家在线，尝试添加到背包 */
         PlayerInventory inventory = player.getInventory();
         List<ItemStack> remainingItems = new ArrayList<>();
-        items.stream()
-                .filter(item -> item.getAmount() == item.getMaxStackSize())
-                .forEach(item -> tryAddToInventory(inventory, item, remainingItems));
-        items.stream()
-                .filter(item -> item.getAmount() < item.getMaxStackSize())
-                .forEach(item -> trySimilarOrAddToInventory(inventory, item, remainingItems));
+        items.forEach(item -> {
+            if (item.getAmount() == item.getMaxStackSize()) {
+                tryAddToInventory(inventory, item, remainingItems);
+            } else {
+                trySimilarOrAddToInventory(inventory, item, remainingItems);
+            }
+        });
         /* 如果有剩余物品，发送邮件 */
         if (!remainingItems.isEmpty()) {
             sendReturnMail(player, remainingItems, "MailTemplate.FullInventoryItemReturn");
@@ -81,9 +82,9 @@ public final class PlayerInventoryUtil {
         int emptySlot = inventory.firstEmpty();
         if (emptySlot != -1) {
             inventory.setItem(emptySlot, item);
-        } else {
-            remainingItems.add(item);
+            return;
         }
+        remainingItems.add(item);
     }
 
     /**

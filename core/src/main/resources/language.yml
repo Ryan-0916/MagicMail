@@ -96,6 +96,7 @@ PlayerMessage:
     ReceiveException: "邮件领取异常，请重新尝试"
   Success:
     ReloadFile: "重载文件成功"
+    Receive: "领取邮件成功"
 ConsoleMessage:
   Error:
     NotPlayer: "此命令仅玩家可用"

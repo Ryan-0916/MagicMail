@@ -174,6 +174,7 @@ public class MailRepository extends BaseRepository<Mail> {
             getRedisStore().hSetObject(redisKey, mailId, mail, -1);
             PlayerInventoryUtil.givePlayerItems(player,
                     attachmentItems.stream().map(AttachmentItem::getItem).toList());
+            sendPlayerMessage(player, "PlayerMessage.Success.Receive");
         } catch (ReceiveException e) {
             sendPlayerMessage(player, "PlayerMessage.Error.ReceiveException");
             getRedisStore().removeKey(redisKey);

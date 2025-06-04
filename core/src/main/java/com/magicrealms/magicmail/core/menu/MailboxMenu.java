@@ -211,8 +211,7 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
         if (index < 0) return;
         int selectedIndex = (getPage() - 1) * PAGE_COUNT + index;
         Mail mail = data.get(selectedIndex);
-        if (!mail.isValid() || mail.getStatus() != MailStatus.UNREAD) {
-            return; }
+        if (!mail.isValid() || mail.getStatus() != MailStatus.UNREAD) { return; }
         new MailAttachmentMenu(MailboxParam.of(getPlayer(), mail, createPlaceholders(selectedIndex),
                 this::asyncOpenMenu));
     }
