@@ -16,7 +16,7 @@ public enum MailboxCategory {
     ALL("全部", 'F'),
     UNREAD("未读", 'G'),
     READ("已读", 'H'),
-    EXPIRED("已过期", 'I');
+    EXPIRED("已过期", 'O');
 
 
     private final String displayName;

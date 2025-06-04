@@ -128,7 +128,7 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
             switch (c) {
                 case 'A' -> setCheckBoxSlot(i, getBackMenuRunnable() != null);
                 case 'D' -> setItemSlot(i, sort.getItemSlot(c));
-                case 'F', 'G', 'H' -> setButtonSlot(i, category.getKey() == c);
+                case 'F', 'G', 'H', 'O' -> setButtonSlot(i, category.getKey() == c);
                 case 'I', 'J' -> {
                     int index = (c == 'I') ? ++appearIndex : appearIndex;
                     if (data.size() > index) {
@@ -167,7 +167,7 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
                 asyncUpdateTitle();
             }
             /* 分类 */
-            case 'F', 'G', 'H' -> {
+            case 'F', 'G', 'H', 'O' -> {
                 if (category.getKey() == c) { return; }
                 MailboxCategory oldCategory = category;
                 this.category = MailboxCategory.fromKey(c);

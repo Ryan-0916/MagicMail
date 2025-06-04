@@ -85,10 +85,12 @@ public class MailRepository extends BaseRepository<Mail> {
         String key = String.format(MAGIC_MAIL_RECEIVED_MAILS, StringUtils
                 .upperCase(mail.getReceiverName()));
         insert(mail);
-        if (!getRedisStore().exists(key)) {
-            return;
-        }
-        getRedisStore().hSetObject(key, mail.getId(), mail, MagicMail.getInstance().getConfigManager().getYmlValue(YML_CONFIG, "Cache.Mail", 3600L, ParseType.LONG));
+        if (getRedisStore().exists(key)) { getRedisStore().hSetObject(key, mail.getId(), mail, MagicMail.getInstance().getConfigManager().getYmlValue(YML_CONFIG, "Cache.Mail", 3600L, ParseType.LONG)); }
+        MessageDispatcher.getInstance().sendBungeeMessage(MagicMail.getInstance().getRedisStore(),
+                BUNGEE_CHANNEL,
+                mail.getReceiverName(),
+                MagicMail.getInstance().getConfigManager().getYmlValue(YML_LANGUAGE, "PlayerMessage.Success.ReceiveMail")
+        );
     }
 
     private Consumer<Mail> getReceiveConsumer(String... attachmentItemIds) throws ReceiveException {

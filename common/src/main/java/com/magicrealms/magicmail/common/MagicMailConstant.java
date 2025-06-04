@@ -25,8 +25,6 @@ public final class MagicMailConstant {
     /* 领取邮箱 Lock */
     public static final String MAGIC_MAIL_RECEIVE_LOCK = "MAGIC_MAIL_RECEIVE_LOCK_%s";
 
-
-
     /** MongoDB部分常量 */
     /* MongoDB 玩家信息表 */
     public static final String MAGIC_MAIL_TABLE_NAME = "magic_mail";

@@ -97,6 +97,7 @@ PlayerMessage:
   Success:
     ReloadFile: "重载文件成功"
     Receive: "领取邮件成功"
+    ReceiveMail: "您收到了一封邮件，输入 /mail 查看"
 ConsoleMessage:
   Error:
     NotPlayer: "此命令仅玩家可用"

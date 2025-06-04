@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.magicrealms.magicmail.common.MagicMailConstant.YML_CONFIG;
@@ -66,9 +67,23 @@ public final class PlayerInventoryUtil {
                 trySimilarOrAddToInventory(inventory, item, remainingItems);
             }
         });
-        /* 如果有剩余物品，发送邮件 */
+        /* 如果有剩余的物品，尝试将玩家的背包融合 */
         if (!remainingItems.isEmpty()) {
-            sendReturnMail(player, remainingItems, "MailTemplate.FullInventoryItemReturn");
+            inventory.setStorageContents(ItemUtil.mergeSimilarItemStacks(Arrays.asList(inventory
+                    .getStorageContents())).toArray(ItemStack[]::new));
+            /* 将剩余的物品放置 */
+            remainingItems.removeIf(item -> {
+                int slot = inventory.firstEmpty();
+                if (slot != -1) {
+                    inventory.setItem(slot, item);
+                    return true;
+                }
+                return false;
+            });
+            /* 如果还有剩余物品，发送邮件 */
+            if (!remainingItems.isEmpty()) {
+                sendReturnMail(player, remainingItems, "MailTemplate.FullInventoryItemReturn");
+            }
         }
     }
 
@@ -98,7 +113,7 @@ public final class PlayerInventoryUtil {
     private static void trySimilarOrAddToInventory(PlayerInventory inventory, ItemStack item, List<ItemStack> remainingItems) {
         int maxItemSize = item.getMaxStackSize();
         if (item.getAmount() != maxItemSize) {
-            inventory.all(item.getType()).forEach((index, inventoryItem) ->
+            inventory.all(item).forEach((index, inventoryItem) ->
                     ItemUtil.similarItem(inventoryItem, item));
         }
         /* 如果物品已经被堆叠到背包中 */
