@@ -211,7 +211,12 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
         if (index < 0) return;
         int selectedIndex = (getPage() - 1) * PAGE_COUNT + index;
         Mail mail = data.get(selectedIndex);
-        if (!mail.isValid() || mail.getStatus() != MailStatus.UNREAD) { return; }
+
+        if (!mail.isValid() || mail.getStatus() == MailStatus.EXPIRED
+                || mail.getStatus() == MailStatus.READ)
+        { return; }
+
+
         new MailAttachmentMenu(MailboxParam.of(getPlayer(), mail, createPlaceholders(selectedIndex),
                 this::asyncOpenMenu));
     }
@@ -283,8 +288,9 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
                     papiSubjectFormat = String.format(SUBJECT_FORMAT, mailSort);
             /* 是否存在变量 */
             map.put(papiHas, hasMail ? getConfigValue(String.format("CustomPapi.%s.%s",
-                    "HasMail_" + mailSort, data.get(index).getStatus()
-                            == MailStatus.READ ? "Read" : "Unread"), "", ParseType.STRING) : StringUtils.EMPTY);
+                    "HasMail_" + mailSort, !data.get(index).isValid() || data.get(index).getStatus() == MailStatus.EXPIRED ? "Expired"
+                                    : data.get(index).getStatus() == MailStatus.UNREAD ? "Unread" : "Read"),
+                    "", ParseType.STRING) : StringUtils.EMPTY);
             /* 是否选中变量 */
             map.put(papiSelected, getCustomPapiText("SelectedMail_" + mailSort, selectedIndex != null && selectedIndex == index));
             /* 主题格式化变量 */
@@ -299,16 +305,20 @@ public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
         map.put("mail_count_bubble", countBubblePapi);
         /* 全部分类 */
         map.put("category_all", MagicLib.getInstance().getOffsetManager().format(categoryState
-                .getOffset().left(), StringUtils.EMPTY) +
+                .getOffset().first(), StringUtils.EMPTY) +
                 getCustomPapiText("CategoryAll", category == MailboxCategory.ALL));
         /* 未读分类 */
         map.put("category_unread", MagicLib.getInstance().getOffsetManager().format(categoryState
-                .getOffset().mid(), StringUtils.EMPTY) +
+                .getOffset().second(), StringUtils.EMPTY) +
                 getCustomPapiText("CategoryUnread", category == MailboxCategory.UNREAD));
-        /* 全部分类 */
+        /* 已读分类 */
         map.put("category_read", MagicLib.getInstance().getOffsetManager().format(categoryState
-                .getOffset().right(), StringUtils.EMPTY) +
+                .getOffset().third(), StringUtils.EMPTY) +
                 getCustomPapiText("CategoryRead", category == MailboxCategory.READ));
+        /* 已过期分类 */
+        map.put("category_expired", MagicLib.getInstance().getOffsetManager().format(categoryState
+                .getOffset().fourth(), StringUtils.EMPTY) +
+                getCustomPapiText("CategoryExpired", category == MailboxCategory.EXPIRED));
         /* 排序 - 最新 */
         map.put("sort_newest", getCustomPapiText("SortNewest", sort == MailBoxSort.NEWEST));
         /* 排序 - 旧的 */

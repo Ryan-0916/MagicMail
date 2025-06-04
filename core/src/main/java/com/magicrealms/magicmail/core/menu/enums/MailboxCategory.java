@@ -15,7 +15,8 @@ import java.util.Arrays;
 public enum MailboxCategory {
     ALL("全部", 'F'),
     UNREAD("未读", 'G'),
-    READ("已读", 'H');
+    READ("已读", 'H'),
+    EXPIRED("已过期", 'I');
 
 
     private final String displayName;
@@ -35,7 +36,8 @@ public enum MailboxCategory {
     }
 
     public boolean filter(Mail mail) {
-        return this == ALL || (this == READ && mail.getStatus() == MailStatus.READ)
+        return this == ALL || (this == EXPIRED && (!mail.isValid() || mail.getStatus() == MailStatus.EXPIRED))
+                || (this == READ && mail.getStatus() == MailStatus.READ)
                 || (this == UNREAD && mail.getStatus() == MailStatus.UNREAD);
     }
 }

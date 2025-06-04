@@ -13,7 +13,8 @@ import java.util.Arrays;
 public enum MailStatus {
     UNREAD(0, "未读"),
     READ(1, "已读"),
-    REMOVED(2, "已删除");
+    EXPIRED(2, "已过期"),
+    REMOVED(3, "已删除"),;
 
     private final int value;
 

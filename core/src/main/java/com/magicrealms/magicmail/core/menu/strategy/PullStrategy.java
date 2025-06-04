@@ -1,9 +1,9 @@
 package com.magicrealms.magicmail.core.menu.strategy;
 
-import com.magicrealms.magiclib.common.utils.Tuple;
 import com.magicrealms.magicmail.core.BukkitMagicMail;
 import com.magicrealms.magicmail.core.menu.MailboxMenu;
 import com.magicrealms.magicmail.core.menu.enums.MailboxCategory;
+import com.magicrealms.magicmail.core.utils.Tuple;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.Nullable;
@@ -38,7 +38,9 @@ public class PullStrategy extends AbstractCategoryStrategy {
         if (oldCategory == null || ANIMATION_TICK <= 0 || STEEP_OFFSET <= 0) {
             offset = Tuple.of(calculateOffset(newCategory == MailboxCategory.ALL),
                     calculateOffset(newCategory == MailboxCategory.UNREAD),
-                    calculateOffset(newCategory == MailboxCategory.READ));
+                    calculateOffset(newCategory == MailboxCategory.READ),
+                    calculateOffset(newCategory == MailboxCategory.EXPIRED)
+            );
             return;
         }
         if (task != null && !task.isCancelled()) {
@@ -64,7 +66,8 @@ public class PullStrategy extends AbstractCategoryStrategy {
                 }
                 offset = Tuple.of(calculateOffset(currentOffset, newCategory, oldCategory, MailboxCategory.ALL),
                         calculateOffset(currentOffset, newCategory, oldCategory, MailboxCategory.UNREAD),
-                        calculateOffset(currentOffset, newCategory, oldCategory, MailboxCategory.READ));
+                        calculateOffset(currentOffset, newCategory, oldCategory, MailboxCategory.READ),
+                        calculateOffset(currentOffset, newCategory, oldCategory, MailboxCategory.EXPIRED));
                 HOLDER.updateTitle();
             }
 
@@ -72,7 +75,8 @@ public class PullStrategy extends AbstractCategoryStrategy {
                 cancel();
                 offset = Tuple.of(calculateOffset(newCategory == MailboxCategory.ALL),
                         calculateOffset(newCategory == MailboxCategory.UNREAD),
-                        calculateOffset(newCategory == MailboxCategory.READ));
+                        calculateOffset(newCategory == MailboxCategory.READ),
+                        calculateOffset(newCategory == MailboxCategory.EXPIRED));
                 HOLDER.updateTitle();
             }
 

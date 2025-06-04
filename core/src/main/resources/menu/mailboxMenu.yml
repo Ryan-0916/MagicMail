@@ -14,6 +14,8 @@ Title:
     Text: '%category_unread%'
   CategoryRead:
     Text: '%category_read%'
+  CategoryExpired:
+    Text: '%category_expired%'
   SortNewest:
     Text: '%sort_newest%'
   SortOldest:
@@ -68,6 +70,9 @@ CustomPapi:
   CategoryRead:
     Enable: '已读'
     UnEnable: '点击切换至已读'
+  CategoryExpired:
+    Enable: '已过期'
+    UnEnable: '点击切换至已过期'
   SortNewest:
     Enable: '排序-最新'
     UnEnable: '点击切换至排序最新'
@@ -75,8 +80,9 @@ CustomPapi:
     Enable: '排序-旧的'
     UnEnable: '点击切换至排序旧的'
   HasMail_N:
-    Enable: '存在第 N 个邮箱'
-    UnEnable: '不存在第 N 个邮箱'
+    Read: '已读邮件'
+    Unread: '未读邮件'
+    Expired: '过期邮件'
   SelectedMail_N:
     Enable: '选中第 N 个邮箱'
     UnEnable: '未选中第 N 个邮箱'
@@ -102,6 +108,7 @@ CustomPapi:
 # L 上一页预留
 # M 下一页
 # N 下一页预留
+# O 分类 - 已过期
 Layout:
   - 'A####BCDE'
   - 'F#IJJJJJK'
@@ -265,4 +272,17 @@ Icons:
       Name: '&E&L下一页'
       Lore:
         - '&6&L下一页'
+  O:
+    ActiveDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L点击切换至已过期邮箱'
+      Lore:
+        - '&6&L点击切换至已过期邮箱'
+    DisabledDisplay:
+      Mats: GLASS_PANE
+      ModelData: 0
+      Name: '&E&L已过期邮箱'
+      Lore:
+        - '&6&L已过期邮箱'
 
