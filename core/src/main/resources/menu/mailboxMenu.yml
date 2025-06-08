@@ -120,168 +120,170 @@ Layout:
 Icons:
   A:
     OpenDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L返回'
       Lore:
         - '&6&L返回'
     CloseDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L关闭'
       Lore:
         - '&6&L关闭'
   B:
     Display:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L删除已读邮箱'
       Lore:
         - '&6&L删除已读邮箱'
   C:
     Display:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L读取未读邮箱'
       Lore:
         - '&6&L读取未读邮箱'
   D:
     NewestDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L收件时间 - 新'
       Lore:
         - '&6&L收件时间 - 新'
         - '&6&L收件时间 - 旧'
     OldestDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L收件时间 - 旧'
       Lore:
         - '&6&L收件时间 - 新'
         - '&6&L收件时间 - 旧'
   E:
     Display:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L%mail_count%'
       Lore:
         - '&6&L%mail_count%'
   F:
     ActiveDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L点击切换至全部邮箱'
       Lore:
         - '&6&L点击切换至全部邮箱'
     DisabledDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L全部邮箱'
       Lore:
         - '&6&L全部邮箱'
   G:
     ActiveDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L点击切换至未读邮箱'
       Lore:
         - '&6&L点击切换至未读邮箱'
     DisabledDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L未读邮箱'
       Lore:
         - '&6&L未读邮箱'
   H:
     ActiveDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L点击切换至已读邮箱'
       Lore:
         - '&6&L点击切换至已读邮箱'
     DisabledDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L已读邮箱'
       Lore:
         - '&6&L已读邮箱'
   I:
     Display:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L%subject%'
       Lore:
         - '&6&L%content%'
+        - '&6&L%send_time_yyyy%年%send_time_MM%月%send_time_dd%日%send_time_HH%时%send_time_mm%分'
   J:
     Display:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L%subject%'
       Lore:
         - '&6&L%content%'
+        - '&6&L%send_time_yyyy%年%send_time_MM%月%send_time_dd%日%send_time_HH%时%send_time_mm%分'
   K:
     ActiveDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L上一页'
       Lore:
         - '&6&L上一页'
     DisabledDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L上一页'
       Lore:
         - '&6&L上一页'
   L:
     ActiveDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L上一页'
       Lore:
         - '&6&L上一页'
     DisabledDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L上一页'
       Lore:
         - '&6&L上一页'
   M:
     ActiveDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L下一页'
       Lore:
         - '&6&L下一页'
     DisabledDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L下一页'
       Lore:
         - '&6&L下一页'
   N:
     ActiveDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L下一页'
       Lore:
         - '&6&L下一页'
     DisabledDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L下一页'
       Lore:
         - '&6&L下一页'
   O:
     ActiveDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L点击切换至已过期邮箱'
       Lore:
         - '&6&L点击切换至已过期邮箱'
     DisabledDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L已过期邮箱'
       Lore:
         - '&6&L已过期邮箱'

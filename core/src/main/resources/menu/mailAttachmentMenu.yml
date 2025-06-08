@@ -83,65 +83,65 @@ Layout:
 Icons:
   A:
     OpenDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L返回'
       Lore:
         - '&6&L返回'
     CloseDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L关闭'
       Lore:
         - '&6&L关闭'
   B:
     ActiveDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L领取'
       Lore:
         - '&6&L领取'
     DisabledDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       HideTooltip: true
   D:
     ActiveDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L上一页'
       Lore:
         - '&6&L上一页'
     DisabledDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L上一页'
       Lore:
         - '&6&L上一页'
   E:
     ActiveDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L下一页'
       Lore:
         - '&6&L下一页'
     DisabledDisplay:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L下一页'
       Lore:
         - '&6&L下一页'
   F:
     Display:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L金币'
       Lore:
         - '&6&L%amount%'
   G:
     Display:
-      Mats: GLASS_PANE
-      ModelData: 0
+      Mats: PAPER
+      ModelData: 10000
       Name: '&E&L点券'
       Lore:
         - '&6&L%point%'

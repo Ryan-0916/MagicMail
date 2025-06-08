@@ -13,7 +13,7 @@ import java.util.Objects;
 
 /**
  * @author Ryan-0916
- * @Desc 物品集合 转换器
+ * @Desc 附件物品转换器
  * @date 2025-05-17
  */
 public class AttachmentItemAdapter extends FieldAdapter<List<AttachmentItem>, String> {

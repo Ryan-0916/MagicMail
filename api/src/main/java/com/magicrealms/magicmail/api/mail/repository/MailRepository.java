@@ -36,9 +36,8 @@ import static com.magicrealms.magicmail.common.MagicMailConstant.*;
 public class MailRepository extends BaseRepository<Mail> {
 
     public MailRepository(MongoDBStore mongoDBStore,
-                          String tableName,
                           @Nullable RedisStore redisStore) {
-        super(mongoDBStore, tableName, redisStore, false, 0, Mail.class);
+        super(mongoDBStore, MAGIC_MAIL_TABLE_NAME, redisStore, Mail.class);
     }
 
 

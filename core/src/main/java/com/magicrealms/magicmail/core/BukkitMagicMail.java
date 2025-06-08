@@ -98,7 +98,7 @@ public class BukkitMagicMail extends MagicMail {
     }
 
     public void setupMailRepository() {
-        this.mailRepository = new MailRepository(mongoDBStore, MAGIC_MAIL_TABLE_NAME, redisStore);
+        this.mailRepository = new MailRepository(mongoDBStore, redisStore);
     }
 
     private void unsubscribe() {

@@ -36,7 +36,7 @@ import static com.magicrealms.magicmail.common.MagicMailConstant.YML_MAILBOX_MEN
  */
 public class MailboxMenu extends PageMenuHolder implements DataChangeListener {
     /* Menu 按钮相关属性 Key */
-    String ICON_DISPLAY = "Icons.%s.Display";
+    private final String ICON_DISPLAY = "Icons.%s.Display";
     /* 邮件数量字体占位符 */
     private final String MAIL_COUNT_FONT_FORMAT;
     /* 邮件数量变量 */

@@ -1,7 +1,7 @@
 package com.magicrealms.magicmail.api.mail;
 
+import com.magicrealms.magiclib.common.adapt.BigDecimalFieldAdapter;
 import com.magicrealms.magiclib.common.annotations.MongoField;
-import com.magicrealms.magicmail.api.mail.adapter.BigDecimalFieldAdapter;
 import com.magicrealms.magicmail.api.mail.adapter.AttachmentItemAdapter;
 import lombok.*;
 
