@@ -1,9 +1,9 @@
 package com.magicrealms.magicmail.core.menu.strategy;
 
 import com.magicrealms.magiclib.common.enums.ParseType;
+import com.magicrealms.magiclib.common.utils.Quad;
 import com.magicrealms.magicmail.core.menu.MailboxMenu;
 import com.magicrealms.magicmail.core.menu.enums.MailboxCategory;
-import com.magicrealms.magicmail.core.utils.Tuple;
 import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,7 +34,7 @@ public abstract class AbstractCategoryStrategy {
     }
 
     @Getter
-    protected Tuple<Integer, Integer, Integer, Integer> offset;
+    protected Quad<Integer, Integer, Integer, Integer> offset;
 
     public abstract void categoryChange(MailboxCategory newCategory, @Nullable MailboxCategory oldCategory);
 

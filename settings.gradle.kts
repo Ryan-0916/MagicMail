@@ -9,7 +9,7 @@ pluginManagement {
         /* PaperMC */
         maven("https://repo.papermc.io/repository/maven-public/")
         /* PlaceholderApi */
-        maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+        maven("https://repo.extendedclip.com/releases/")
     }
 }
 

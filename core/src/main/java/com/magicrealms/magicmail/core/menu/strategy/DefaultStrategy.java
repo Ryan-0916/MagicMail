@@ -1,8 +1,8 @@
 package com.magicrealms.magicmail.core.menu.strategy;
 
+import com.magicrealms.magiclib.common.utils.Quad;
 import com.magicrealms.magicmail.core.menu.MailboxMenu;
 import com.magicrealms.magicmail.core.menu.enums.MailboxCategory;
-import com.magicrealms.magicmail.core.utils.Tuple;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -18,7 +18,7 @@ public class DefaultStrategy extends AbstractCategoryStrategy {
 
     public void categoryChange(MailboxCategory newCategory,
                                @Nullable MailboxCategory oldCategory) {
-        offset = Tuple.of(calculateOffset(newCategory == MailboxCategory.ALL),
+        offset = Quad.of(calculateOffset(newCategory == MailboxCategory.ALL),
                 calculateOffset(newCategory == MailboxCategory.UNREAD),
                 calculateOffset(newCategory == MailboxCategory.READ),
                 calculateOffset(newCategory == MailboxCategory.EXPIRED));
