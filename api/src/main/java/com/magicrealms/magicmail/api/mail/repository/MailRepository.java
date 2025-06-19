@@ -6,6 +6,7 @@ import com.magicrealms.magiclib.common.store.MongoDBStore;
 import com.magicrealms.magiclib.common.store.RedisStore;
 import com.magicrealms.magiclib.common.utils.MongoDBUtil;
 import com.magicrealms.magiclib.common.utils.RedissonUtil;
+import com.magicrealms.magiclib.core.MagicLib;
 import com.magicrealms.magiclib.core.dispatcher.MessageDispatcher;
 import com.magicrealms.magicmail.api.MagicMail;
 import com.magicrealms.magicmail.api.exception.ReceiveException;
@@ -42,7 +43,7 @@ public class MailRepository extends BaseRepository<Mail> {
 
 
     private void cacheMailBox(String key, List<Mail> mails) {
-        getRedisStore().hSetObject(key, mails.stream()
+        redisStore.hSetObject(key, mails.stream()
                         .collect(Collectors.toMap(
                                 Mail::getId,    // Key: Mail 的 ID
                                 mail -> mail,   // Value: Mail 对象本身
@@ -59,12 +60,12 @@ public class MailRepository extends BaseRepository<Mail> {
     public List<Mail> queryMailBox(Player player) {
         String id = StringUtils.upperCase(player.getName());
         String key = String.format(MAGIC_MAIL_RECEIVED_MAILS, id);
-        Optional<List<Mail>> cachedData = getRedisStore().hGetAllObject(key, Mail.class);
+        Optional<List<Mail>> cachedData = redisStore.hGetAllObject(key, Mail.class);
         if (cachedData.isPresent()) {
             return cachedData.get();
         }
         List<Mail> mails = new ArrayList<>();
-        try (MongoCursor<Document> cursor = getMongoDBStore().find(getTableName(), Filters
+        try (MongoCursor<Document> cursor = mongoDBStore.find(tableName, Filters
                         .regex("receiver_name", "^" + Pattern.quote(id) + "$", "i"))) {
             while (cursor.hasNext()) {
                 mails.add(MongoDBUtil.toObject(cursor.next(), Mail.class));
@@ -84,7 +85,7 @@ public class MailRepository extends BaseRepository<Mail> {
         String key = String.format(MAGIC_MAIL_RECEIVED_MAILS, StringUtils
                 .upperCase(mail.getReceiverName()));
         insert(mail);
-        if (getRedisStore().exists(key)) { getRedisStore().hSetObject(key, mail.getId(), mail, MagicMail.getInstance().getConfigManager().getYmlValue(YML_CONFIG, "Cache.Mail", 3600L, ParseType.LONG)); }
+        if (redisStore.exists(key)) { redisStore.hSetObject(key, mail.getId(), mail, MagicMail.getInstance().getConfigManager().getYmlValue(YML_CONFIG, "Cache.Mail", 3600L, ParseType.LONG)); }
         MessageDispatcher.getInstance().sendBungeeMessage(MagicMail.getInstance().getRedisStore(),
                 BUNGEE_CHANNEL,
                 mail.getReceiverName(),
@@ -129,7 +130,7 @@ public class MailRepository extends BaseRepository<Mail> {
         String upName = StringUtils.upperCase(player.getName());
         String key = String.format(MAGIC_MAIL_RECEIVED_MAILS, upName);
         String lockKey = String.format(MAGIC_MAIL_RECEIVE_LOCK, upName);
-        RedissonUtil.doAsyncWithLock(getRedisStore(), lockKey, upName, 5000L, () ->
+        RedissonUtil.doAsyncWithLock(redisStore, lockKey, upName, 5000L, () ->
                 processMailReceipt(player, mailId, key, null));
     }
 
@@ -143,7 +144,7 @@ public class MailRepository extends BaseRepository<Mail> {
         String upName = StringUtils.upperCase(player.getName());
         String key = String.format(MAGIC_MAIL_RECEIVED_MAILS, upName);
         String lockKey = String.format(MAGIC_MAIL_RECEIVE_LOCK, upName);
-        RedissonUtil.doAsyncWithLock(getRedisStore(), lockKey, upName, 5000L, () -> processMailReceipt(player, mailId, key,
+        RedissonUtil.doAsyncWithLock(redisStore, lockKey, upName, 5000L, () -> processMailReceipt(player, mailId, key,
                 new HashSet<>(Arrays.asList(attachmentItemIds))));
     }
 
@@ -170,17 +171,20 @@ public class MailRepository extends BaseRepository<Mail> {
             boolean b = updateById(mailId, receiveConsumer);
             if (!b) {
                 sendPlayerMessage(player, "PlayerMessage.Error.ReceiveException");
-                getRedisStore().removeKey(redisKey);
+                redisStore.removeKey(redisKey);
                 return;
             }
             receiveConsumer.accept(mail);
-            getRedisStore().hSetObject(redisKey, mailId, mail, -1);
+            redisStore.hSetObject(redisKey, mailId, mail, -1);
+            MagicLib.getInstance().getVaultManager()
+                    .depositAmount(player, mail.getAttachment().getAmount());
+            /* Todo: 给予玩家点券 */
             PlayerInventoryUtil.givePlayerItems(player,
                     attachmentItems.stream().map(AttachmentItem::getItem).toList());
             sendPlayerMessage(player, "PlayerMessage.Success.Receive");
         } catch (ReceiveException e) {
             sendPlayerMessage(player, "PlayerMessage.Error.ReceiveException");
-            getRedisStore().removeKey(redisKey);
+            redisStore.removeKey(redisKey);
         }
     }
 
