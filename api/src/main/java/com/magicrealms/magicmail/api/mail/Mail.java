@@ -70,6 +70,24 @@ public class Mail {
         return builder(null, receiver);
     }
 
+    public static MailBuilder builder(UUID receiverId, String receiverName) {
+        return builder(null, receiverId, receiverName);
+    }
+
+    public static MailBuilder builder(@Nullable Player sender, UUID receiverId, String receiverName) {
+        Objects.requireNonNull(receiverId, "Receiver id cannot be null");
+        Objects.requireNonNull(receiverName, "Receiver name cannot be null");
+        return new MailBuilder()
+                .id(IdGeneratorUtil.getId())
+                .receiverId(receiverId)
+                .receiverName(receiverName)
+                .status(MailStatus.UNREAD)
+                .sendTime(System.currentTimeMillis())
+                .attachment(MailAttachment.builder().build())
+                .senderId(sender != null ? sender.getUniqueId() : null)
+                .senderName(sender != null ? sender.getName() : null);
+    }
+
     public String getSenderName() {
         return senderName != null ? senderName : "System";
     }

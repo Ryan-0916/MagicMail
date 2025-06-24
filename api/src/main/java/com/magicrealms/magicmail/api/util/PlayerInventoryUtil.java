@@ -13,6 +13,8 @@ import org.bukkit.inventory.PlayerInventory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.magicrealms.magicmail.common.MagicMailConstant.YML_CONFIG;
 
@@ -50,6 +52,8 @@ public final class PlayerInventoryUtil {
      * @param items 给予物品列表
      */
     public static void givePlayerItems(Player player, List<ItemStack> items) {
+        Objects.requireNonNull(items);
+        items = items.stream().filter(Objects::nonNull).collect(Collectors.toList());
         if (items.isEmpty()) {
             return;
         }
